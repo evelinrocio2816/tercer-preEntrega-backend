@@ -1,6 +1,6 @@
 const socket = require("socket.io");
-const ProductServices = require("../services/product.services.js");
-const productServices = new ProductServices(); 
+const ProductRepository = require("../repositorys/product.repository.js");
+const productRepository = new ProductRepository(); 
 const MessageModel = require("../models/message.models.js");
 
 class SocketManager {
@@ -13,15 +13,15 @@ class SocketManager {
         this.io.on("connection", async (socket) => {
             console.log("Un cliente se conectó");
             
-            socket.emit("products", await productServices.getProducts() );
+            socket.emit("products", await productRepository.getProducts() );
 
             socket.on("deleteProduct", async (id) => {
-                await productServices.deleteProduct(id);
+                await productRepository.deleteProduct(id);
                 this.emitUpdatedProducts(socket);
             });
 
             socket.on("addproduct", async (product) => {
-                await productServices.addProduct(product);
+                await productRepository.addProduct(product);
                 this.emitUpdatedProducts(socket);
             });
 
@@ -34,7 +34,7 @@ class SocketManager {
     }
 
     async emitUpdatedProducts(socket) {
-        socket.emit("products", await productServices.getProducts());
+        socket.emit("products", await productRepository.getProducts());
     }
 }
 

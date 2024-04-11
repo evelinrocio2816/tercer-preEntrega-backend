@@ -1,6 +1,6 @@
 const ProductModel = require("../models/products.models.js");
-const CartServices = require("../services/cart.services.js");
-const cartServices = new CartServices();
+const CartRepository = require("../repositorys/cart.repository.js");
+const cartRepository = new CartRepository();
 
 class ViewsController {
     async renderProducts(req, res) {
@@ -54,7 +54,7 @@ class ViewsController {
     async renderCart(req, res) {
         const cartId = req.params.cid;
         try {
-            const cart = await cartServices.getProductsFromCart(cartId);
+            const cart = await cartRepository.getProductsFromCart(cartId);
 
             if (!cart) {
                 console.log("No existe el carrito con ese id");

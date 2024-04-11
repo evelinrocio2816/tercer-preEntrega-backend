@@ -1,15 +1,15 @@
-const CartServices = require("../services/cart.services.js");
-const cartServices = new CartServices();
+const CartRepository = require("../repositorys/cart.repository.js");
+const cartRepository = new CartRepository();
 const TicketModel = require("../models/ticket.models.js")
 const UserModel = require("../models/user.models.js")
-const ProductServices = require("../services/product.services.js")
-const productServices = new ProductServices()
+const ProductRepository = require("../repositorys/product.repository.js")
+const productRepository = new ProductRepository()
 const{generateUniqueCode, calculateTotal} = require("../utils/cartUtils.js")
 
 class CartController {
     async newCart(req, res) {
         try {
-            const newCart = await cartServices.createCart();
+            const newCart = await cartRepository.createCart();
             res.json(newCart);
         } catch (error) {
             res.status(500).send("Error");
@@ -19,7 +19,7 @@ class CartController {
     async getProductsFromCart(req, res) {
         const cartId = req.params.cid;
         try {
-            const products = await cartServices.getProductsFromCart(cartId);
+            const products = await cartRepository.getProductsFromCart(cartId);
             if (!products) {
                 return res.status(404).json({ error: "Carrito no encontrado" }); 
             }
@@ -36,7 +36,7 @@ class CartController {
         const productId = req.params.pid;
         const quantity = req.body.quantity || 1;
         try {
-            await cartServices.addProduct(cartId, productId, quantity);
+            await cartRepository.addProduct(cartId, productId, quantity);
            const cartID = (req,user,cart).toString()
 
             res.redirect(`/carts/${cartID}`)
@@ -52,7 +52,7 @@ class CartController {
         const cartId = req.params.cid;
         const productId = req.params.pid;
         try {
-            const updatedCart = await cartServices.removeProduct(cartId, productId);
+            const updatedCart = await cartRepository.removeProduct(cartId, productId);
             res.json({
                 status: 'success',
                 message: 'Producto eliminado del carrito correctamente',
@@ -68,7 +68,7 @@ class CartController {
         const cartId = req.params.cid;
         const updatedProducts = req.body;
         try {
-            const updatedCart = await cartServices.updateProductsInCart(cartId, updatedProducts);
+            const updatedCart = await cartRepository.updateProductsInCart(cartId, updatedProducts);
             res.json(updatedCart);
         } catch (error) {
             console.error("Error al actualizar productos del carrito:", error);
@@ -81,7 +81,7 @@ class CartController {
         const productId = req.params.pid;
         const newQuantity = req.body.quantity;
         try {
-            const updatedCart = await cartServices.updateQuantityInCart(cartId, productId, newQuantity);
+            const updatedCart = await cartRepository.updateQuantityInCart(cartId, productId, newQuantity);
             res.json({
                 status: 'success',
                 message: 'Cantidad del producto actualizada correctamente',
@@ -96,7 +96,7 @@ class CartController {
     async emptyCart(req, res) {
         const cartId = req.params.cid;
         try {
-            const updatedCart = await cartServices.emptyCart(cartId);
+            const updatedCart = await cartRepository.emptyCart(cartId);
             res.json({
                 status: 'success',
                 message: 'Todos los productos del carrito fueron eliminados correctamente',
@@ -113,7 +113,7 @@ class CartController {
         const cartId = req.params.cid;
         try {
             // Obtener el carrito y sus productos
-            const cart = await cartServices.addProductToCart(cartId);
+            const cart = await cartRepository.addProductToCart(cartId);
             const products = cart.products;
 
             // Inicializar un arreglo para almacenar los productos no disponibles
@@ -122,7 +122,7 @@ class CartController {
             // Verificar el stock y actualizar los productos disponibles
             for (const item of products) {
                 const productId = item.product;
-                const product = await productServices.getProductsById(productId);
+                const product = await productRepository.getProductsById(productId);
                 if (product.stock >= item.quantity) {
                     // Si hay suficiente stock, restar la cantidad del producto
                     product.stock -= item.quantity;

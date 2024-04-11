@@ -1,12 +1,12 @@
-const ProductServices = require("../services/product.services.js");
-const productServices = new ProductServices();
+const ProductRepository = require("../repositorys/product.repository");
+const productRepository = new ProductRepository();
 
 class ProductController {
 
     async addProduct(req, res) {
         const newProduct = req.body;
         try {
-            const result = await productServices.addProduct(newProduct);
+            const result = await productRepository.addProduct(newProduct);
             res.status(201).json(result); 
         } catch (error) {
             console.error("Error al agregar un nuevo producto:", error);
@@ -17,7 +17,7 @@ class ProductController {
     async getProducts(req, res) {
         try {
             let { limit = 10, page = 1, sort, query } = req.query;
-            const products = await productServices.getProducts(limit, page, sort, query);
+            const products = await productRepository.getProducts(limit, page, sort, query);
             res.json(products);
         } catch (error) {
             console.error("Error al obtener los productos:", error);
@@ -28,7 +28,7 @@ class ProductController {
     async getProductsById(req, res) {
         const id = req.params.pid;
         try {
-            const sought = await productServices.getProductsById(id);
+            const sought = await productRepository.getProductsById(id);
             if (!sought) {
                 return res.status(404).json({ error: "Producto no encontrado" });
             }
@@ -44,7 +44,7 @@ class ProductController {
             const id = req.params.pid;
             const updatedProduct = req.body;
 
-            const result = await productServices.updateProduct(id, updatedProduct);
+            const result = await productRepository.updateProduct(id, updatedProduct);
             res.json(result);
         } catch (error) {
             console.error("Error al actualizar el producto:", error);
@@ -55,7 +55,7 @@ class ProductController {
     async deleteProduct(req, res) {
         const id = req.params.pid;
         try {
-            let answer = await productServices.deleteProduct(id);
+            let answer = await productRepository.deleteProduct(id);
             res.json(answer);
         } catch (error) {
             console.error("Error al eliminar el producto:", error);

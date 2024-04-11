@@ -1,6 +1,6 @@
 const ProductModel = require("../models/products.models.js");
 
-class ProductServices {
+class ProductRepository {
   async addProduct({
     title,
     description,
@@ -129,4 +129,4 @@ class ProductServices {
   }
 }
 
-module.exports = ProductServices;
+module.exports = ProductRepository;
