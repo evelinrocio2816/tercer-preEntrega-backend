@@ -7,6 +7,9 @@ const initializePassport = require("./config/passport.config.js");
 const PORT = 8080;
 require("./db/database.js");
 
+
+
+
 const productsRouter = require("./routes/products.router.js");
 const cartsRouter = require("./routes/carts.router.js");
 const viewsRouter = require("./routes/views.router.js");
