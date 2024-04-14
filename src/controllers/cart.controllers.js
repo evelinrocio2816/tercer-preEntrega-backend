@@ -37,7 +37,7 @@ class CartController {
         const quantity = req.body.quantity || 1;
         try {
             await cartRepository.addProduct(cartId, productId, quantity);
-           const cartID = (req,user,cart).toString()
+           const cartID = (req.user.cart).toString()
 
             res.redirect(`/carts/${cartID}`)
     
@@ -109,7 +109,7 @@ class CartController {
     }
 
      
-     async finalizePursache(req, res) {
+     async finalizePurchase(req, res) {
         const cartId = req.params.cid;
         try {
             const cart = await cartRepository.addProductToCart(cartId);

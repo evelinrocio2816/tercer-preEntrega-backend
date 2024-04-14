@@ -27,3 +27,18 @@ function emptyCart(cartId) {
             console.error('Error:', error);
         });
 }
+
+function finalizePurchase(cartId) {
+    fetch(`/api/carts/${cartId}/purchase`, {
+        method: 'POST'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al finalizar compra');
+            }
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
