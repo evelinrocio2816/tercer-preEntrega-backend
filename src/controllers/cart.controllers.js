@@ -41,7 +41,7 @@ class CartController {
 
             res.redirect(`/carts/${cartID}`)
     
-            res.status(201).json({ message: 'Producto añadido al carrito correctamente' }); 
+            //res.status(201).json({ message: 'Producto añadido al carrito correctamente' }); 
         } catch (error) {
             console.error("Error al añadir producto al carrito:", error);
             res.status(400).json({ error: "Error al añadir producto al carrito" });
