@@ -20,7 +20,7 @@ class SocketManager {
                 this.emitUpdatedProducts(socket);
             });
 
-            socket.on("addproduct", async (product) => {
+            socket.on("addProduct", async (product) => {
                 await productRepository.addProduct(product);
                 this.emitUpdatedProducts(socket);
             });

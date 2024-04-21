@@ -112,7 +112,7 @@ class CartController {
      async finalizePurchase(req, res) {
         const cartId = req.params.cid;
         try {
-            const cart = await cartRepository.addProductToCart(cartId);
+            const cart = await cartRepository.getProductsFromCart(cartId);
             const products = cart.products;
 
             const productsNotAvailable = [];

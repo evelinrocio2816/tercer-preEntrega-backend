@@ -103,7 +103,8 @@ class ViewsController {
     }
 
     async renderChat(req, res) {
-        res.render("chat");
+        const cartId = req.user.cart.toString()
+        res.render("chat",{cartId});
     }
 
     async renderHome(req, res) {

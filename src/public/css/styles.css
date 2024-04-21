@@ -44,8 +44,6 @@ nav ul li a:hover {
 }
 /*PROFILE*/
 
-
-
 h1 {
   text-align: center;
   margin-top: 20px;
@@ -92,12 +90,11 @@ h1 {
 
 .containerHome {
   text-align: center;
-  margin-top: 100px;
 }
 
 .Init {
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px 20px;
   background-color: #de8fef;
   color: #fff;
@@ -123,7 +120,7 @@ h2 {
 .container-login {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100vh;
 }
 .container-loginForm {

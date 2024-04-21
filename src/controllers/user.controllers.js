@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { createHash, isValidPassword } = require("../utils/hashBcryp.js");
 const UserDTO = require("../dto/user.dto.js");
 const GithubUserModel = require("../models/githubUser.models.js")
+
 class UserController {
     async register(req, res) {
         const { first_name, last_name, email, password, age } = req.body;
@@ -78,7 +79,7 @@ class UserController {
         //Con DTO: 
         const userDto = new UserDTO(req.user.first_name, req.user.last_name, req.user.role);
         const isAdmin = req.user.role === 'admin';
-        res.render("profile", { user: userDto, isAdmin });
+        res.render("profile", { user: userDto, isAdmin});
     }
 
     async logout(req, res) {
